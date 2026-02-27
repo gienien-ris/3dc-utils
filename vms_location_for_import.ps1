@@ -18,6 +18,4 @@ ForEach-Object -Process {
     $_ | Add-Member -Name Datastore -Value ((Get-View -Id $vm.DatastoreIdList -Property Name).Name -join '|') -MemberType NoteProperty
     $_
 
-} | #export-csv -Path C:\git\powershell\stefan_dc3_utils\vm_inventory.csv -NoTypeInformation -Encoding unicode
-
-Where-Object{$_.Name -eq 'imp_exp_test_stefan' }| export-csv -Path C:\git\powershell\stefan_dc3_utils\vm_inventory.csv -NoTypeInformation -Encoding unicode
+} | export-csv -Path C:\git\powershell\stefan_dc3_utils\vm_inventory.csv -NoTypeInformation -Encoding unicode
