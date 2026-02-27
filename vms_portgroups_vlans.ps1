@@ -1,4 +1,4 @@
-Get-VM -name "*stefan*" | ForEach-Object {
+Get-VM  | ForEach-Object {
 
     $vm = $_
 
@@ -23,4 +23,5 @@ Get-VM -name "*stefan*" | ForEach-Object {
 
 
     }
+
 } | export-csv -Path C:\git\powershell\stefan_dc3_utils\vm_nic_vlans.csv -NoTypeInformation -Encoding unicode
