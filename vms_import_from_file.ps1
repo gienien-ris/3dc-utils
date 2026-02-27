@@ -7,7 +7,7 @@
 	$nicfile
   )
  
-. .\functions\get-folderbypath.ps1
+. .\get-folder-by-path.ps1
 
 
 #$impofile="C:\git\powershell\stefan_dc3_utils\vm_inventory.csv"
@@ -62,4 +62,5 @@ foreach($myline in $impodat) {
 					write-host "No matching NIC info found in input file for VM: $($myline.Name) NIC: $($nic.Name). Skipping NIC configuration."
 				}
 			}
+
 	}
