@@ -1,4 +1,4 @@
-Get-VM -name "*MIG*" | ForEach-Object {
+Get-VM -name "*stefan*" | ForEach-Object {
 
     $vm = $_
 
@@ -6,7 +6,7 @@ Get-VM -name "*MIG*" | ForEach-Object {
         $nic = $_
         $pgName = $nic.NetworkName
         $pg = Get-VDPortGroup -Name $pgName 
-        if (!$pg) {
+        if ($pg) {
           
         if ($pg.ExtensionData.Config.DefaultPortConfig.Vlan.VlanId -is [int]) {
             $vlan = ($pg.ExtensionData.Config.DefaultPortConfig.Vlan.VlanId)
@@ -25,7 +25,7 @@ Get-VM -name "*MIG*" | ForEach-Object {
             Portgroup      = $pgName
             VlanId         = $vlan
         }
+
+
     }
 } | export-csv -Path C:\sb\vm_nic_vlans.csv -NoTypeInformation -Encoding unicode
-
-

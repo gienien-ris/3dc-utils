@@ -48,9 +48,13 @@ foreach($myline in $impodat) {
 					$nicinfo | Format-List
 					$pgName = $nicinfo.Portgroup
 					$vlanId = $nicinfo.VlanId
+					if ($vlanId.contains(",") -or $vlanId.contains("-")) {
+						write-host "Vlan ID is a range or list: $vlanId"
+						$newdvportg = Get-VDPortgroup | Where-Object {$_.VlanConfiguration.Ranges -like $vlanId -and $_.Name -notlike "*DVUplinks*"}
+					} else {
 						write-host "Looking for portgroup with VLAN ID: $vlanId"
-						$newdvportg = Get-VirtualPortGroup | Where-Object {$_.ExtensionData.Config.DefaultPortConfig.Vlan.VlanId -eq $vlanId } | Select-Object -First 1
-
+						$newdvportg = Get-VDPortgroup | Where-Object {$_.ExtensionData.Config.DefaultPortConfig.Vlan.VlanId -eq $vlanId }
+					}
 
 					write-host "setting network adapter $($nic.Name) to portgroup $($newdvportg.Name) from $pgName"
 					Set-NetworkAdapter -NetworkAdapter $nic -Portgroup $newdvportg -Confirm:$false
@@ -58,5 +62,4 @@ foreach($myline in $impodat) {
 					write-host "No matching NIC info found in input file for VM: $($myline.Name) NIC: $($nic.Name). Skipping NIC configuration."
 				}
 			}
-
 	}
